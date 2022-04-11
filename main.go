@@ -4,41 +4,47 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/caiounderscore/stone-challenge/costumer"
 	"github.com/caiounderscore/stone-challenge/file"
-	"github.com/caiounderscore/stone-challenge/register"
+	"github.com/caiounderscore/stone-challenge/grocery"
 )
 
-var registers []register.Register
+var registers []grocery.Register
 
 func main() {
 	// var wg sync.WaitGroup
 
 	pathFile := os.Args[1]
-	rawRegisters, rawCostumers := file.ParseFile(pathFile)
-	// fmt.Println(rawRegisters, rawCostumers)
-	costumer := costumer.BuildCostumers(rawCostumers)
-	// fmt.Println(costumers)
-	registers := register.BuildRegisters(rawRegisters)
+	rawRegisters, rawCustomers := file.ParseFile(pathFile)
+	// fmt.Println(rawRegisters, rawCustomers)
+	Customers := grocery.BuildCustomers(rawCustomers)
+	// fmt.Println(Customers)
+	registers := grocery.BuildRegisters(rawRegisters)
 	// fmt.Println(rawRegisters)
-	fmt.Println(registers)
+	// fmt.Println(Customers)
 	// var tchan chan int
 	// tchan = make(chan int, 1)
 	var t = 1
-	for _, c := range costumer {
+	gr := grocery.NewGrocery(registers, Customers)
+	// var t2 = 1
+	for {
+		for _, c := range gr.Customers {
+			if c.ArrivalTime == t {
+				c.SelectRegister(registers, t)
+				c.Register.Push(*c)
+				gr.Customers = gr.Customers[1:]
 
-		for _, r := range registers {
-			r.ProcessItem(&t)
+			}
 		}
+		gr.ProcessItem(t)
 
-		c.SelectRegister(registers)
-		// fmt.Println(c.Type)
-		c.Register.Push(c.Items)
-		fmt.Println(c.Register)
+		if grocery.CheckRegistersIfEmpty(registers) {
+			break
+		}
+		t++
 
 	}
-
-	fmt.Println(t)
+	// i := len(gr.Registers)
+	fmt.Println(gr.Registers[0].TimeToProcess)
 	// wg.Wait()
 
 	// close(tchan)
@@ -50,11 +56,11 @@ func main() {
 
 }
 
-// func choiceRegister(c, costumer.Costumer, rs []register.Register) register.Register {
+// func choiceRegister(c, Customer.Customer, rs []register.Register) register.Register {
 // 	for _, r := range rs {
 // 		if r.IsEmpty() {
 // 			return r
-// 		} else if c.Type == "B" && r.Costumers {
+// 		} else if c.Type == "B" && r.Customers {
 
 // 		}
 // 	}

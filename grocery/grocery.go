@@ -1,39 +1,51 @@
 package grocery
 
-// import (
-// 	"github.com/caiounderscore/stone-challenge/costumer"
-// 	"github.com/caiounderscore/stone-challenge/register"
-// )
+type Grocery struct {
+	Registers []*Register
+	Customers []*Customer
+}
 
-// type Grocery struct {
-// 	Registers []*register.Register
-// 	Costumers []*costumer.Costumer
-// }
+func NewGrocery(rs []*Register, cs []*Customer) *Grocery {
+	return &Grocery{
+		Registers: rs,
+		Customers: cs,
+	}
+}
 
-// func (g *Grocery) GetSmallRegister() register.Register {
-// 	i := len(g.Registers)
-// 	smallest := g.Registers[i]
-// 	for _, r := range g.Registers {
-// 		if len(r.CostumerItems) < len(smallest.CostumerItems) {
-// 			smallest = r
-// 		}
-// 	}
-// 	return *smallest
+func (g *Grocery) ProcessItem(t int) {
+	for _, r := range g.Registers {
 
-// }
+		if len(r.Customers) != 0 && r.Customers[0].TimeToProcess == t {
+			r.Customers[0].Items--
+
+			if r.Customers[0].Items <= 0 {
+				r.Customers = r.Customers[1:]
+				if len(r.Customers) == 0 {
+					continue
+				}
+			}
+
+			if r.Training {
+				r.Customers[0].TimeToProcess = t + 2
+			} else {
+				r.Customers[0].TimeToProcess = t + 1
+			}
+		}
+	}
+}
 
 // func (g *Grocery) GetSmallRegisterItemRecord() register.Register {
 // 	i := len(g.Registers)
 // 	smallest := g.Registers[i]
 // 	for _, r := range g.Registers {
-// 		if len(r.CostumerItems) == 0 {
+// 		if len(r.CustomerItems) == 0 {
 // 			return *r
 // 		}
 
-// 		lastIdFewest := len(smallest.CostumerItems) - 1
-// 		lastIdRegister := len(r.CostumerItems) - 1
+// 		lastIdFewest := len(smallest.CustomerItems) - 1
+// 		lastIdRegister := len(r.CustomerItems) - 1
 
-// 		if r.CostumerItems[lastIdRegister] < smallest.CostumerItems[lastIdFewest] {
+// 		if r.CustomerItems[lastIdRegister] < smallest.CustomerItems[lastIdFewest] {
 // 			smallest = r
 // 		}
 // 	}
