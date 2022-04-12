@@ -31,7 +31,7 @@ func (g *Grocery) ProcessItem(t int) {
 		if len(r.Customers) != 0 && r.Customers[0].TimeToProcess == t {
 			r.Customers[0].Items--
 			if r.Customers[0].Items <= 0 {
-				r.Customers = r.Customers[1:]
+				r.Pop()
 				if len(r.Customers) == 0 {
 					continue
 				}
@@ -45,22 +45,3 @@ func (g *Grocery) ProcessItem(t int) {
 		}
 	}
 }
-
-// func (g *Grocery) GetSmallRegisterItemRecord() register.Register {
-// 	i := len(g.Registers)
-// 	smallest := g.Registers[i]
-// 	for _, r := range g.Registers {
-// 		if len(r.CustomerItems) == 0 {
-// 			return *r
-// 		}
-
-// 		lastIdFewest := len(smallest.CustomerItems) - 1
-// 		lastIdRegister := len(r.CustomerItems) - 1
-
-// 		if r.CustomerItems[lastIdRegister] < smallest.CustomerItems[lastIdFewest] {
-// 			smallest = r
-// 		}
-// 	}
-// 	return *smallest
-
-// }
