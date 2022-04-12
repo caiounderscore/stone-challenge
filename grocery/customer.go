@@ -13,6 +13,8 @@ type Customer struct {
 	TimeToProcess int
 }
 
+var Customers []*Customer
+
 func NewCustomer() *Customer {
 	return &Customer{}
 }

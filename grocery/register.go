@@ -29,11 +29,10 @@ func BuildRegisters(r []int) []*Register {
 }
 
 func getSmallRegister(rs []*Register) *Register {
-	i := len(rs) - 1
-	smallest := rs[i]
+	smallest := rs[0]
 	for _, r := range rs {
-		if len(r.Customers) <= len(smallest.Customers) {
-			return r
+		if r.Size() < smallest.Size() {
+			smallest = r
 
 		}
 	}
@@ -42,19 +41,15 @@ func getSmallRegister(rs []*Register) *Register {
 }
 
 func getSmallRegisterItemRecord(rs []*Register) *Register {
-	// i := rs[1]
-	smallest := rs[1]
+	smallest := rs[0]
 	for _, r := range rs {
-		if r.IsEmpty() {
+		if len(r.Customers) == 0 {
 			return r
-		}
-		if smallest.IsEmpty() {
-			return smallest
 		}
 		lastIdFewest := smallest.Size() - 1
 		lastIdRegister := r.Size() - 1
 		if r.Customers[lastIdRegister].Items < smallest.Customers[lastIdFewest].Items {
-			smallest = r
+			return r
 		}
 	}
 
