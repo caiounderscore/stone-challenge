@@ -1,7 +1,6 @@
 package grocery
 
 import (
-	"fmt"
 	"strconv"
 )
 
@@ -41,7 +40,6 @@ func (c *Customer) SelectRegister(rs []*Register, t int) {
 }
 
 func BuildCustomers(rawCustomers [][]string) []*Customer {
-	fmt.Println(rawCustomers)
 	for i, v := range rawCustomers {
 		var id int = 1
 		id += i

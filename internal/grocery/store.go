@@ -3,16 +3,14 @@ package grocery
 import "sort"
 
 type Grocery struct {
-	Registers      []*Register
-	Customers      []*Customer
-	TotalCustomers int
+	Registers []*Register
+	Customers []*Customer
 }
 
 func NewGrocery(rs []*Register, cs []*Customer) *Grocery {
 	return &Grocery{
-		Registers:      rs,
-		Customers:      cs,
-		TotalCustomers: len(cs),
+		Registers: rs,
+		Customers: cs,
 	}
 }
 
