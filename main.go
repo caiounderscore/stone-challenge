@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/caiounderscore/stone-challenge/file"
-	"github.com/caiounderscore/stone-challenge/grocery"
+	"github.com/caiounderscore/stone-challenge/internal/file"
+	"github.com/caiounderscore/stone-challenge/internal/grocery"
 )
 
 var registers []grocery.Register

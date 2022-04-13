@@ -1,10 +1,9 @@
 package grocery
 
 type Register struct {
-	Id            int
-	Customers     []Customer
-	Training      bool
-	TimeToProcess int
+	Id        int
+	Customers []Customer
+	Training  bool
 }
 
 func NewRegister(id int, t bool) *Register {
